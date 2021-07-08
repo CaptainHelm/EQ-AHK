@@ -1,0 +1,61 @@
+Movement:
+{
+	Iniread, Move_Forward, Config.ini, Movement, Forward
+	Iniread, Move_Forward, Config.ini, Movement, Backward
+	Iniread, Move_Forward, Config.ini, Movement, Left
+	Iniread, Move_Forward, Config.ini, Movement, Right
+	Iniread, Character_sit, Config.ini, Movement, Sit
+}
+
+Target_Party:
+{
+	Iniread, Target_party_slot_1, Config.ini, Target Party Slot, Party Slot 1
+	Iniread, Target_party_slot_2, Config.ini, Target Party Slot, Party Slot 2
+	Iniread, Target_party_slot_3, Config.ini, Target Party Slot, Party Slot 3
+	Iniread, Target_party_slot_4, Config.ini, Target Party Slot, Party Slot 4
+	Iniread, Target_party_slot_5, Config.ini, Target Party Slot, Party Slot 5
+	Iniread, Target_party_slot_6, Config.ini, Target Party Slot, Party Slot 6
+	Iniread, Target_party_slot_self, Config.ini, Target Party Slot, Party Slot self
+}
+
+Hotbar_Row_1:
+{
+	Iniread, Hotbar_row_1_slot_1, Config.ini, HotBar Row 1, slot 1
+	Iniread, Hotbar_row_1_slot_2, Config.ini, HotBar Row 1, slot 2
+	Iniread, Hotbar_row_1_slot_3, Config.ini, HotBar Row 1, slot 3
+	Iniread, Hotbar_row_1_slot_4, Config.ini, HotBar Row 1, slot 4
+	Iniread, Hotbar_row_1_slot_5, Config.ini, HotBar Row 1, slot 5
+	Iniread, Hotbar_row_1_slot_6, Config.ini, HotBar Row 1, slot 6
+	Iniread, Hotbar_row_1_slot_7, Config.ini, HotBar Row 1, slot 7
+	Iniread, Hotbar_row_1_slot_8, Config.ini, HotBar Row 1, slot 8
+	Iniread, Hotbar_row_1_slot_9, Config.ini, HotBar Row 1, slot 9
+	Iniread, Hotbar_row_1_slot_10, Config.ini, HotBar Row 1, slot 10
+	Iniread, Hotbar_row_1_slot_11, Config.ini, HotBar Row 1, slot 11
+	Iniread, Hotbar_row_1_slot_12, Config.ini, HotBar Row 1, slot 12
+}
+
+Hotbar_Row_2:
+{
+	Iniread, Hotbar_row_2_slot_1, Config.ini, HotBar Row 2, slot 1
+	Iniread, Hotbar_row_2_slot_2, Config.ini, HotBar Row 2, slot 2
+	Iniread, Hotbar_row_2_slot_3, Config.ini, HotBar Row 2, slot 3
+	Iniread, Hotbar_row_2_slot_4, Config.ini, HotBar Row 2, slot 4
+	Iniread, Hotbar_row_2_slot_5, Config.ini, HotBar Row 2, slot 5
+	Iniread, Hotbar_row_2_slot_6, Config.ini, HotBar Row 2, slot 6
+	Iniread, Hotbar_row_2_slot_7, Config.ini, HotBar Row 2, slot 7
+	Iniread, Hotbar_row_2_slot_8, Config.ini, HotBar Row 2, slot 8
+	Iniread, Hotbar_row_2_slot_9, Config.ini, HotBar Row 2, slot 9
+	Iniread, Hotbar_row_2_slot_10, Config.ini, HotBar Row 2, slot 10
+	Iniread, Hotbar_row_2_slot_11, Config.ini, HotBar Row 2, slot 11
+	Iniread, Hotbar_row_2_slot_12, Config.ini, HotBar Row 2, slot 12
+}
+
+
+
+
+hotkey, %Target_party_slot_2%,test,On
+return
+
+test:
+msgbox  Dynamically setting the hotkey worked!
+return
