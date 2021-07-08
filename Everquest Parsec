@@ -1,0 +1,490 @@
+#SingleInstance force
+#UseHook
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+;#MaxThreadsPerHotkey
+#Warn  ; Enable warnings to assist with detecting common errors.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+
+
+setTimer, eq, 1
+#persistent
+
+
+hotkey1:
+{
+	
+	controlsend,,{F2}, ahk_class MTY_Window
+	return
+	
+}
+
+hotkey2:
+{
+	
+	controlsend,,{F3}, ahk_class MTY_Window
+	return
+	
+}
+hotkey3:
+{
+	
+	controlsend,,{F4}, ahk_class MTY_Window
+	return
+	
+}
+hotkey4:
+{
+	
+	controlsend,,{F5}, ahk_class MTY_Window
+	return
+	
+}
+hotkey5:
+{
+	
+	controlsend,,{F5}, ahk_class MTY_Window
+	return
+	
+}
+hotkey6:
+{
+	
+	controlsend,,{F6}, ahk_class MTY_Window
+	return
+	
+}
+hotkey7:
+{
+	
+	controlsend,,{F1}, ahk_class MTY_Window
+	return
+	
+}
+hotkeyw:
+{	
+	controlsend,,{w down}, ahk_class MTY_Window
+	keywait w, Up
+	controlsend,,{w up}, ahk_class MTY_Window
+	return
+	
+}
+hotkeya:
+{
+	controlsend,,{a down}, ahk_class MTY_Window
+	keywait a, Up
+	controlsend,,{a up}, ahk_class MTY_Window
+	return
+}
+hotkeys:
+{
+	controlsend,,{s down}, ahk_class MTY_Window
+	keywait s, Up
+	controlsend,,{s up}, ahk_class MTY_Window
+	return	
+}
+hotkeyd:
+{
+	controlsend,,{d down}, ahk_class MTY_Window
+	keywait d, Up 
+	controlsend,,{d up}, ahk_class MTY_Window
+	return
+}
+hotkeysit:
+{
+	
+	controlsend,,{CtrlDown}s, ahk_class MTY_Window
+	sleep 1
+	controlsend,,{CtrlUp}s, ahk_class MTY_Window
+	return
+	
+}
+;;mousemove, 3650, 320,
+hotkeyfollow:
+{
+	controlsend,,{altdown}f, ahk_class MTY_Window
+	sleep 1
+	controlsend,,{altup}f, ahk_class MTY_Window
+	return
+}	
+
+
+OperationRatEar:
+{
+	MouseClick
+	sleep 200
+	controlsend,,{enter}
+	sleep 250
+	return
+}
+
+eq:
+ifwinactive ahk_class _EverQuestwndclass ;; modifiers are the following: ! = Alt, ^ = Ctrl, + = Shift,
+{
+	hotkey +1, hotkey1, on ;; target party slot 1
+	hotkey +2, hotkey2, on ;; target party slot 2
+	hotkey +3, hotkey3, on ;; target party slot 3
+	hotkey +4, hotkey4, on ;; target party slot 4
+	hotkey +5, hotkey5, on ;; target party slot 5
+	hotkey +6, hotkey6, on ;; target party slot 6
+	hotkey !SC029, hotkey7, on ;; target party slot 7
+	hotkey !w, hotkeyw, on ;; box move forward
+	hotkey !a, hotkeya, on ;; box move left
+	hotkey !s, hotkeys, on ;; box move backwards
+	hotkey !d, hotkeyd, on ;; box move right
+	hotkey ^!s, hotkeysit, on ;; ctrl alt s to sit
+	hotkey !1, ButtonR1S1, on ;; button row 1 slot 1
+	hotkey !2, ButtonR1S2, on ;; button row 1 slot 2
+	hotkey !3, ButtonR1S3, on ;; button row 1 slot 3
+	hotkey !4, ButtonR1S4, on ;; button row 1 slot 4
+	hotkey !5, ButtonR1S5, on ;; button row 1 slot 5
+	hotkey !6, ButtonR1S6, on ;; button row 1 slot 6
+	hotkey !7, ButtonR1S7, on ;; button row 1 slot 7
+	hotkey !8, ButtonR1S8, on ;; button row 1 slot 8
+	hotkey !9, ButtonR1S9, on ;; button row 1 slot 9
+	hotkey !0, ButtonR1S0, on ;; button row 1 slot 0
+	hotkey !f, hotkeyfollow, on ;; alt F bound to alt f on box rebound on hotbar 2 equals key with a hotkey /target character /pause 1 /follow
+	hotkey +!1, ButtonR2S1, on
+	hotkey !+2, ButtonR2S2, on
+	hotkey !+3, ButtonR2S3, on
+	hotkey !+4, ButtonR2S4, on
+	hotkey !+5, ButtonR2S5, on
+	hotkey !+6, ButtonR2S6, on
+	hotkey !+7, ButtonR2S7, on
+	hotkey !+8, ButtonR2S8, on
+	hotkey !+9, ButtonR2S9, on
+	hotkey !+0, ButtonR2S0, on
+	hotkey +z, OperationRatEar, on
+}
+else
+{
+	hotkey +1, hotkey1, off
+	hotkey +2, hotkey2, off
+	hotkey +3, hotkey3, off
+	hotkey +4, hotkey4, off
+	hotkey +5, hotkey5, off
+	hotkey +6, hotkey6, off
+	hotkey !SC029, hotkey7, off
+	hotkey !w, hotkeyw, off
+	hotkey !a, hotkeya, off
+	hotkey !s, hotkeys, off
+	hotkey !d, hotkeyd, off
+	hotkey ^!s, hotkeysit, off
+	hotkey !1, ButtonR1S1, off
+	hotkey !2, ButtonR1S2, off
+	hotkey !3, ButtonR1S3, off
+	hotkey !4, ButtonR1S4, off
+	hotkey !5, ButtonR1S5, off
+	hotkey !6, ButtonR1S6, off
+	hotkey !7, ButtonR1S7, off
+	hotkey !8, ButtonR1S8, off
+	hotkey !9, ButtonR1S9, off
+	hotkey !0, ButtonR1S0, off
+	hotkey !f, hotkeyfollow, off
+	hotkey !+1, ButtonR2S1, off
+	hotkey !+2, ButtonR2S2, off
+	hotkey !+3, ButtonR2S3, off
+	hotkey !+4, ButtonR2S4, off
+	hotkey !+5, ButtonR2S5, off
+	hotkey !+6, ButtonR2S6, off
+	hotkey !+7, ButtonR2S7, off
+	hotkey !+8, ButtonR2S8, off
+	hotkey !+9, ButtonR2S9, off
+	hotkey !+0, ButtonR2S0, off
+	hotkey +z, OperationRatEar, off
+}
+
+!^h::
+{
+	Gui, Color, CADD22
+	Gui, +ToolWindow -Caption +E0x08000000
+	Gui, Show, x1700 y1025 h85 w485, Everquest Alt Hot Bar
+	Gui, +LastFound
+	WinSet, TransColor, CADD22
+	WinSet, AlwaysOnTop, On
+}
+
+gui_Row:
+{
+	Row_1:							
+	{
+		Gui, Font, s7 w400, Verdana
+		Gui, Add, Button, x4 y0 w38 h38 +Center +Border, R1S1 ;; need to adjust bar spacing to standard hostbar spacing ingame
+		Gui, Add, Button, x45 y0 w38 h38 +Center +Border, R1S2
+		Gui, Add, Button, x85 y0 w38 h38 +Center +Border, R1S3
+		Gui, Add, Button, x125 y0 w38 h38 +Center +Border, R1S4
+		Gui, Add, Button, x165 y0 w38 h38 +Center +Border, R1S5
+		Gui, Add, Button, x205 y0 w38 h38 +Center +Border, R1S6
+		Gui, Add, Button, x245 y0 w38 h38 +Center +Border, R1S7
+		Gui, Add, Button, x285 y0 w38 h38 +Center +Border, R1S8
+		Gui, Add, Button, x325 y0 w38 h38 +Center +Border, R1S9
+		Gui, Add, Button, x365 y0 w38 h38 +Center +Border, R1S0
+		Gui, Add, Button, x405 y0 w38 h38 +Center +Border, R1S-
+		Gui, Add, Button, x445 y0 w38 h38 +Center +Border, R1S=
+	}
+	
+	Row_2:
+	{
+		Gui, Font, s7 w400, Verdana
+		Gui, Add, Button, x4 y42 w38 h38 +Center +Border, R2S1
+		Gui, Add, Button, x45 y42 w38 h38 +Center +Border, R2S2
+		Gui, Add, Button, x85 y42 w38 h38 +Center +Border, R2S3
+		Gui, Add, Button, x125 y42 w38 h38 +Center +Border, R2S4
+		Gui, Add, Button, x165 y42 w38 h38 +Center +Border, R2S5
+		Gui, Add, Button, x205 y42 w38 h38 +Center +Border, R2S6
+		Gui, Add, Button, x245 y42 w38 h38 +Center +Border, R2S7
+		Gui, Add, Button, x285 y42 w38 h38 +Center +Border, R2S8
+		Gui, Add, Button, x325 y42 w38 h38 +Center +Border, R2S9
+		Gui, Add, Button, x365 y42 w38 h38 +Center +Border, R2S0
+		Gui, Add, Button, x405 y42 w38 h38 +Center +Border, R2S-
+		Gui, Add, Button, x445 y42 w38 h38 +Center +Border, R2S=
+	}
+}
+
+button_commands_Row_1:
+{
+	ButtonR1S1:
+	{
+		controlsend,,1, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR1S2:
+	{
+		controlsend,,2, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR1S3:
+	{
+		controlsend,,3, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR1S4:
+	{
+		controlsend,,4, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR1S5:
+	{
+		controlsend,,5, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR1S6:
+	{
+		controlsend,,6, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR1S7:
+	{
+		controlsend,,7, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR1S8:
+	{
+		controlsend,,8, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR1S9:
+	{
+		controlsend,,9, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR1S0:
+	{
+		controlsend,,0, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	;;ButtonR1S-:
+	;;{
+	;;	controlsend,,-, ahk_class MTY_Window
+	;;	sleep 1
+	;;	WinActivate ahk_class _EverQuestwndclass
+	;;	return
+	;;}
+	
+	;;ButtonR1S=:
+	;;{
+	;;	controlsend,,=, ahk_class MTY_Window
+	;;	sleep 1
+	;;	WinActivate ahk_class _EverQuestwndclass
+	;;	return
+	;;}
+}
+
+button_commands_Row_2:
+{
+	ButtonR2S1:
+	{
+		controlsend,,{ShiftDown}1, ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S2:
+	{
+		controlsend,,{ShiftDown}2, ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S3:
+	{
+		controlsend,,{ShiftDown}3, ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S4:
+	{
+		controlsend,,{ShiftDown}4, ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S5:
+	{
+		controlsend,,{ShiftDown}5, ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S6:
+	{
+		controlsend,,{ShiftDown}6, ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S7:
+	{
+		controlsend,,{ShiftDown}7, ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S8:
+	{
+		controlsend,,{ShiftDown}8, ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S9:
+	{
+		controlsend,,{ShiftDown}9, ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S0:
+	{
+		controlsend,,{ShiftDown}0, ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S-:
+	{
+		controlsend,,{ShiftDown}- ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+	
+	ButtonR2S=:
+	{
+		controlsend,,{ShiftDown}= ahk_class MTY_Window
+		sleep 1
+		controlsend,,{Shiftup}, ahk_class MTY_Window
+		sleep 1
+		WinActivate ahk_class _EverQuestwndclass
+		return
+	}
+}
+
+
+return
+
+
+GuiClose:
+{
+	!^Esc::Gui Cancel
+	
+}
+
+Reloadscript:
+{
+	!^R::Reload
+}
+
+Getcolor:
+{
+	^!z::  ; Control+Alt+Z hotkey.
+	MouseGetPos, MouseX, MouseY
+	PixelGetColor, color, %MouseX%, %MouseY%
+	MsgBox The color at the current cursor position is %color%.
+	return
+}
+
+return
