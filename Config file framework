@@ -1,61 +1,863 @@
-Movement:
+#SingleInstance force
+#UseHook
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+;#MaxThreadsPerHotkey
+;#Warn  ; Enable warnings to assist with detecting common errors.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+
+
+IniFile=Config.ini
+IfExist, %IniFile%
 {
-	Iniread, Move_Forward, Config.ini, Movement, Forward
-	Iniread, Move_Forward, Config.ini, Movement, Backward
-	Iniread, Move_Forward, Config.ini, Movement, Left
-	Iniread, Move_Forward, Config.ini, Movement, Right
-	Iniread, Character_sit, Config.ini, Movement, Sit
+	Movement:
+	{
+		Iniread, Move_Forward, Config.ini, Movement, Forward
+		Iniread, Move_Backward, Config.ini, Movement, Backward
+		Iniread, Move_Left, Config.ini, Movement, Left
+		Iniread, Move_Right, Config.ini, Movement, Right
+		Iniread, Character_sit, Config.ini, Movement, Sit
+	}
+	
+	Target_Party:
+	{
+		Iniread, Target_party_slot_1, Config.ini, Target Party Slot, Party Slot 1
+		Iniread, Target_party_slot_2, Config.ini, Target Party Slot, Party Slot 2
+		Iniread, Target_party_slot_3, Config.ini, Target Party Slot, Party Slot 3
+		Iniread, Target_party_slot_4, Config.ini, Target Party Slot, Party Slot 4
+		Iniread, Target_party_slot_5, Config.ini, Target Party Slot, Party Slot 5
+		Iniread, Target_party_slot_6, Config.ini, Target Party Slot, Party Slot 6
+		Iniread, Target_party_slot_self, Config.ini, Target Party Slot, Party Slot self
+	}
+	
+	Hotbar_Row_1:
+	{
+		Iniread, Hotbar_row_1_slot_1, Config.ini, Hotbar Row 1, slot 1
+		Iniread, Hotbar_row_1_slot_2, Config.ini, Hotbar Row 1, slot 2
+		Iniread, Hotbar_row_1_slot_3, Config.ini, Hotbar Row 1, slot 3
+		Iniread, Hotbar_row_1_slot_4, Config.ini, Hotbar Row 1, slot 4
+		Iniread, Hotbar_row_1_slot_5, Config.ini, Hotbar Row 1, slot 5
+		Iniread, Hotbar_row_1_slot_6, Config.ini, Hotbar Row 1, slot 6
+		Iniread, Hotbar_row_1_slot_7, Config.ini, Hotbar Row 1, slot 7
+		Iniread, Hotbar_row_1_slot_8, Config.ini, Hotbar Row 1, slot 8
+		Iniread, Hotbar_row_1_slot_9, Config.ini, Hotbar Row 1, slot 9
+		Iniread, Hotbar_row_1_slot_10, Config.ini, Hotbar Row 1, slot 10
+		Iniread, Hotbar_row_1_slot_11, Config.ini, Hotbar Row 1, slot 11
+		Iniread, Hotbar_row_1_slot_12, Config.ini, Hotbar Row 1, slot 12
+	}
+	
+	Hotbar_Row_2:
+	{
+		Iniread, Hotbar_row_2_slot_1, Config.ini, Hotbar Row 2, slot 1
+		Iniread, Hotbar_row_2_slot_2, Config.ini, Hotbar Row 2, slot 2
+		Iniread, Hotbar_row_2_slot_3, Config.ini, Hotbar Row 2, slot 3
+		Iniread, Hotbar_row_2_slot_4, Config.ini, Hotbar Row 2, slot 4
+		Iniread, Hotbar_row_2_slot_5, Config.ini, Hotbar Row 2, slot 5
+		Iniread, Hotbar_row_2_slot_6, Config.ini, Hotbar Row 2, slot 6
+		Iniread, Hotbar_row_2_slot_7, Config.ini, Hotbar Row 2, slot 7
+		Iniread, Hotbar_row_2_slot_8, Config.ini, Hotbar Row 2, slot 8
+		Iniread, Hotbar_row_2_slot_9, Config.ini, Hotbar Row 2, slot 9
+		Iniread, Hotbar_row_2_slot_10, Config.ini, Hotbar Row 2, slot 10
+		Iniread, Hotbar_row_2_slot_11, Config.ini, Hotbar Row 2, slot 11
+		Iniread, Hotbar_row_2_slot_12, Config.ini, Hotbar Row 2, slot 12
+		
+		
+	}
+	gosub loadforward
+	gosub loadbackward
+	gosub loadleft
+	gosub loadright
+	gosub loadsit
+	gosub loadTarget_party_slot_1
+	gosub loadTarget_party_slot_2
+	gosub loadTarget_party_slot_3
+	gosub loadTarget_party_slot_4
+	gosub loadTarget_party_slot_5
+	gosub loadTarget_party_slot_6
+	gosub loadTarget_party_slot_self
+	gosub loadHotbar_row_1_slot_1
+	gosub loadHotbar_row_1_slot_2
+	gosub loadHotbar_row_1_slot_3
+	gosub loadHotbar_row_1_slot_4
+	gosub loadHotbar_row_1_slot_5
+	gosub loadHotbar_row_1_slot_6
+	gosub loadHotbar_row_1_slot_7
+	gosub loadHotbar_row_1_slot_8
+	gosub loadHotbar_row_1_slot_9
+	gosub loadHotbar_row_1_slot_10
+	gosub loadHotbar_row_1_slot_11
+	gosub loadHotbar_row_1_slot_12
+	gosub loadHotbar_row_2_slot_1
+	gosub loadHotbar_row_2_slot_2
+	gosub loadHotbar_row_2_slot_3
+	gosub loadHotbar_row_2_slot_4
+	gosub loadHotbar_row_2_slot_5
+	gosub loadHotbar_row_2_slot_6
+	gosub loadHotbar_row_2_slot_7
+	gosub loadHotbar_row_2_slot_8
+	gosub loadHotbar_row_2_slot_9
+	gosub loadHotbar_row_2_slot_10
+	gosub loadHotbar_row_2_slot_11
+	gosub loadHotbar_row_2_slot_12
 }
 
-Target_Party:
+
+!t::
 {
-	Iniread, Target_party_slot_1, Config.ini, Target Party Slot, Party Slot 1
-	Iniread, Target_party_slot_2, Config.ini, Target Party Slot, Party Slot 2
-	Iniread, Target_party_slot_3, Config.ini, Target Party Slot, Party Slot 3
-	Iniread, Target_party_slot_4, Config.ini, Target Party Slot, Party Slot 4
-	Iniread, Target_party_slot_5, Config.ini, Target Party Slot, Party Slot 5
-	Iniread, Target_party_slot_6, Config.ini, Target Party Slot, Party Slot 6
-	Iniread, Target_party_slot_self, Config.ini, Target Party Slot, Party Slot self
+	Gui, Show, x962 y0 h1300 w762, GUI NAME GO HERE BRRRRR
+	Gui, +ToolWindow ;-Caption ;removes AHK windows bar at the top of the window
+	Gui, Font, s8 w700, Verdana
+	Gui, Add, Text,, Movement Keybinds
+	
+	Gui, Add, Text,, Move Forward
+	Gui, Add, Hotkey, vMove_Forward gloadforward, % Move_Forward
+	Gui, Add, Button, gforwardsave, Save
+	
+	Gui, Add, Text,, Move Backward
+	Gui, Add, Hotkey, vMove_Backward, % Move_Backward
+	Gui, Add, Button, gbackwardsave, Save
+	
+	Gui, Add, Text,, Move Left
+	Gui, Add, Hotkey, vMove_Left gloadLeft, % Move_Left
+	Gui, Add, Button, gleftsave, Save
+	
+	Gui, Add, Text,, Move Right
+	Gui, Add, Hotkey, vMove_Right gloadRight, % Move_Right
+	Gui, Add, Button, grightsave, Save
+	
+	Gui, Add, Text,, Sit
+	Gui, Add, Hotkey, vCharacter_Sit gloadsit, % Character_Sit
+	Gui, Add, Button, gsitsave, Save
+	
+	Gui, Add, Text,, Target Party Slot Keybinds
+	
+	Gui, Add, Text,, Party Slot 1 Keybind
+	Gui, Add, Hotkey, vTarget_party_slot_1 gloadTarget_party_slot_1, % Target_party_slot_1
+	Gui, Add, Button, gTarget_party_slot_1save, Save
+	
+	Gui, Add, Text,, Party Slot 2 Keybind
+	Gui, Add, Hotkey, vTarget_party_slot_2 gloadTarget_party_slot_2, % Target_party_slot_2
+	Gui, Add, Button, gTarget_party_slot_2save, Save
+	
+	Gui, Add, Text,, Party Slot 3 Keybind
+	Gui, Add, Hotkey, vTarget_party_slot_3 gloadTarget_party_slot_3, % Target_party_slot_3
+	Gui, Add, Button, gTarget_party_slot_3save, Save
+	
+	Gui, Add, Text,, Party Slot 4 Keybind
+	Gui, Add, Hotkey, vTarget_party_slot_4 gloadTarget_party_slot_4, % Target_party_slot_4
+	Gui, Add, Button, gTarget_party_slot_4save, Save
+	
+	Gui, Add, Text,, Party Slot 5 Keybind
+	Gui, Add, Hotkey, vTarget_party_slot_5 gloadTarget_party_slot_5, % Target_party_slot_5
+	Gui, Add, Button, gTarget_party_slot_5save, Save
+	
+	Gui, Add, Text,, Party Slot 6 Keybind
+	Gui, Add, Hotkey, vTarget_party_slot_6 gloadTarget_party_slot_6, % Target_party_slot_6
+	Gui, Add, Button, gTarget_party_slot_6save, Save
+	
+	Gui, Add, Text,, Party Slot self Keybind
+	Gui, Add, Hotkey, vTarget_party_slot_self gloadTarget_party_slot_self, % Target_party_slot_self
+	Gui, Add, Button, gTarget_party_slot_selfsave, Save
+	
+	Gui, Add, Text,, Hotbar Row 1
+	
+	Gui, Add, Text,, Slot 1
+	Gui, Add, Hotkey, vHotbar_row_1_slot_1 gloadHotbar_row_1_slot_1, % Hotbar_row_1_slot_1
+	Gui, Add, Button, gHotbar_row_1_slot_1save, Save
+	
+	Gui, Add, Text,, Slot 2
+	Gui, Add, Hotkey, vHotbar_row_1_slot_2 gloadHotbar_row_1_slot_2, % Hotbar_row_1_slot_2
+	Gui, Add, Button, gHotbar_row_1_slot_2save, Save
+	
+	Gui, Add, Text,, Slot 3
+	Gui, Add, Hotkey, vHotbar_row_1_slot_3 gloadHotbar_row_1_slot_3, % Hotbar_row_1_slot_3
+	Gui, Add, Button, gHotbar_row_1_slot_3save, Save
+	
+	Gui, Add, Text,, Slot 4 
+	Gui, Add, Hotkey, vHotbar_row_1_slot_4 gloadHotbar_row_1_slot_4, % Hotbar_row_1_slot_4
+	Gui, Add, Button, gHotbar_row_1_slot_4save, Save
+	
+	Gui, Add, Text,, Slot 5
+	Gui, Add, Hotkey, vHotbar_row_1_slot_5 gloadHotbar_row_1_slot_5, % Hotbar_row_1_slot_5
+	Gui, Add, Button, gHotbar_row_1_slot_5save, Save
+	
+	Gui, Add, Text,, Slot 6
+	Gui, Add, Hotkey, vHotbar_row_1_slot_6 gloadHotbar_row_1_slot_6, % Hotbar_row_1_slot_6
+	Gui, Add, Button, gHotbar_row_1_slot_6save, Save
+	
+	Gui, Add, Text,, Slot 7
+	Gui, Add, Hotkey, vHotbar_row_1_slot_7 gloadHotbar_row_1_slot_7, % Hotbar_row_1_slot_7
+	Gui, Add, Button, gHotbar_row_1_slot_7save, Save
+	
+	Gui, Add, Text,, Slot 8
+	Gui, Add, Hotkey, vHotbar_row_1_slot_8 gloadHotbar_row_1_slot_8, % Hotbar_row_1_slot_8
+	Gui, Add, Button, gHotbar_row_1_slot_8save, Save
+	
+	Gui, Add, Text,, Slot 9
+	Gui, Add, Hotkey, vHotbar_row_1_slot_9 gloadHotbar_row_1_slot_9, % Hotbar_row_1_slot_9
+	Gui, Add, Button, gHotbar_row_1_slot_9save, Save
+	
+	Gui, Add, Text,, Slot 10
+	Gui, Add, Hotkey, vHotbar_row_1_slot_10 gloadHotbar_row_1_slot_10, % Hotbar_row_1_slot_10
+	Gui, Add, Button, gHotbar_row_1_slot_10save, Save
+	
+	Gui, Add, Text,, Slot 11
+	Gui, Add, Hotkey, vHotbar_row_1_slot_11 gloadHotbar_row_1_slot_11, % Hotbar_row_1_slot_11
+	Gui, Add, Button, gHotbar_row_1_slot_11save, Save
+	
+	Gui, Add, Text,, Slot 12
+	Gui, Add, Hotkey, vHotbar_row_1_slot_12 gloadHotbar_row_1_slot_12, % Hotbar_row_1_slot_12
+	Gui, Add, Button, gHotbar_row_1_slot_12save, Save
+	
+	Gui, Add, Text,, Hotbar Row 2
+	
+	Gui, Add, Text,, Slot 1
+	Gui, Add, Hotkey, vHotbar_row_2_slot_1 gloadHotbar_row_2_slot_1, % Hotbar_row_2_slot_1
+	Gui, Add, Button, gHotbar_row_1_slot_1save, Save
+	
+	Gui, Add, Text,, Slot 2
+	Gui, Add, Hotkey, vHotbar_row_2_slot_2 gloadHotbar_row_2_slot_2, % Hotbar_row_2_slot_2
+	Gui, Add, Button, gHotbar_row_2_slot_2save, Save
+	
+	Gui, Add, Text,, Slot 3
+	Gui, Add, Hotkey, vHotbar_row_2_slot_3 gloadHotbar_row_2_slot_3, % Hotbar_row_2_slot_3
+	Gui, Add, Button, gHotbar_row_2_slot_3save, Save
+	
+	Gui, Add, Text,, Slot 4 
+	Gui, Add, Hotkey, vHotbar_row_2_slot_4 gloadHotbar_row_2_slot_4, % Hotbar_row_2_slot_4
+	Gui, Add, Button, gHotbar_row_2_slot_4save, Save
+	
+	Gui, Add, Text,, Slot 5
+	Gui, Add, Hotkey, vHotbar_row_2_slot_5 gloadHotbar_row_2_slot_5, % Hotbar_row_2_slot_5
+	Gui, Add, Button, gHotbar_row_2_slot_5save, Save
+	
+	Gui, Add, Text,, Slot 6
+	Gui, Add, Hotkey, vHotbar_row_2_slot_6 gloadHotbar_row_2_slot_6, % Hotbar_row_2_slot_6
+	Gui, Add, Button, gHotbar_row_2_slot_6save, Save
+	
+	Gui, Add, Text,, Slot 7
+	Gui, Add, Hotkey, vHotbar_row_2_slot_7 gloadHotbar_row_2_slot_7, % Hotbar_row_2_slot_7
+	Gui, Add, Button, gHotbar_row_2_slot_7save, Save
+	
+	Gui, Add, Text,, Slot 8
+	Gui, Add, Hotkey, vHotbar_row_2_slot_8 gloadHotbar_row_2_slot_8, % Hotbar_row_2_slot_8
+	Gui, Add, Button, gHotbar_row_2_slot_8save, Save
+	
+	Gui, Add, Text,, Slot 9
+	Gui, Add, Hotkey, vHotbar_row_2_slot_9 gloadHotbar_row_2_slot_9, % Hotbar_row_2_slot_9
+	Gui, Add, Button, gHotbar_row_2_slot_9save, Save
+	
+	Gui, Add, Text,, Slot 10
+	Gui, Add, Hotkey, vHotbar_row_2_slot_10 gloadHotbar_row_2_slot_10, % Hotbar_row_2_slot_10
+	Gui, Add, Button, gHotbar_row_2_slot_10save, Save
+	
+	Gui, Add, Text,, Slot 11
+	Gui, Add, Hotkey, vHotbar_row_2_slot_11 gloadHotbar_row_2_slot_11, % Hotbar_row_2_slot_11
+	Gui, Add, Button, gHotbar_row_2_slot_11save, Save
+	
+	Gui, Add, Text,, Slot 12
+	Gui, Add, Hotkey, vHotbar_row_2_slot_12 gloadHotbar_row_2_slot_12, % Hotbar_row_2_slot_12
+	Gui, Add, Button, gHotbar_row_2_slot_12save, Save
+	
+	return
 }
 
-Hotbar_Row_1:
+ButtonSave:
 {
-	Iniread, Hotbar_row_1_slot_1, Config.ini, HotBar Row 1, slot 1
-	Iniread, Hotbar_row_1_slot_2, Config.ini, HotBar Row 1, slot 2
-	Iniread, Hotbar_row_1_slot_3, Config.ini, HotBar Row 1, slot 3
-	Iniread, Hotbar_row_1_slot_4, Config.ini, HotBar Row 1, slot 4
-	Iniread, Hotbar_row_1_slot_5, Config.ini, HotBar Row 1, slot 5
-	Iniread, Hotbar_row_1_slot_6, Config.ini, HotBar Row 1, slot 6
-	Iniread, Hotbar_row_1_slot_7, Config.ini, HotBar Row 1, slot 7
-	Iniread, Hotbar_row_1_slot_8, Config.ini, HotBar Row 1, slot 8
-	Iniread, Hotbar_row_1_slot_9, Config.ini, HotBar Row 1, slot 9
-	Iniread, Hotbar_row_1_slot_10, Config.ini, HotBar Row 1, slot 10
-	Iniread, Hotbar_row_1_slot_11, Config.ini, HotBar Row 1, slot 11
-	Iniread, Hotbar_row_1_slot_12, Config.ini, HotBar Row 1, slot 12
-}
-
-Hotbar_Row_2:
-{
-	Iniread, Hotbar_row_2_slot_1, Config.ini, HotBar Row 2, slot 1
-	Iniread, Hotbar_row_2_slot_2, Config.ini, HotBar Row 2, slot 2
-	Iniread, Hotbar_row_2_slot_3, Config.ini, HotBar Row 2, slot 3
-	Iniread, Hotbar_row_2_slot_4, Config.ini, HotBar Row 2, slot 4
-	Iniread, Hotbar_row_2_slot_5, Config.ini, HotBar Row 2, slot 5
-	Iniread, Hotbar_row_2_slot_6, Config.ini, HotBar Row 2, slot 6
-	Iniread, Hotbar_row_2_slot_7, Config.ini, HotBar Row 2, slot 7
-	Iniread, Hotbar_row_2_slot_8, Config.ini, HotBar Row 2, slot 8
-	Iniread, Hotbar_row_2_slot_9, Config.ini, HotBar Row 2, slot 9
-	Iniread, Hotbar_row_2_slot_10, Config.ini, HotBar Row 2, slot 10
-	Iniread, Hotbar_row_2_slot_11, Config.ini, HotBar Row 2, slot 11
-	Iniread, Hotbar_row_2_slot_12, Config.ini, HotBar Row 2, slot 12
-}
-
-
-
-
-hotkey, %Target_party_slot_2%,test,On
+Gui, Submit, NoHide
+;IniWrite, %Move_Forward%, %IniFile%, Movement, Forward
 return
+}
 
-test:
-msgbox  Dynamically setting the hotkey worked!
+Routine:
+{
+Msgbox, You have pressed a button nerd
+return
+}
+
+
+loadforward:
+{
+Gui,Submit, nohide
+Hotkey, %Move_Forward%, Routine, On ;Assign hotkey to the inputed key
+if previousforward ;Save previous for disabling it when a new key appears
+{
+	Hotkey, %previousforward%, Routine, Off
+}
+Previousforward := Move_Forward
+return
+}
+loadbackward:
+{
+	Gui,Submit, nohide
+	Hotkey, %Move_Backward%, Routine, On ;Assign hotkey to the inputed key
+	if previousbackward ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousbackward%, Routine, Off
+	}
+	previousbackward := Move_Backward
+	return
+}
+loadleft:
+	{
+		Gui,Submit, nohide
+		Hotkey, %Move_Forward%, Routine, On ;Assign hotkey to the inputed key
+		if previousleft ;Save previous for disabling it when a new key appears
+		{
+			Hotkey, %previousleft%, Routine, Off
+		}
+		previousleft := Move_Forward
+		return
+	}
+loadright:
+	{
+		Gui,Submit, nohide
+		Hotkey, %Move_Forward%, Routine, On ;Assign hotkey to the inputed key
+		if previousright ;Save previous for disabling it when a new key appears
+		{
+			Hotkey, %previousright%, Routine, Off
+		}
+		Previousright := Move_Forward
+		return
+}
+loadsit:
+{
+	Gui,Submit, nohide
+	Hotkey, %Character_Sit%, Routine, On ;Assign hotkey to the inputed key
+	if previoussit ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previoussit%, Routine, Off
+	}
+	Previoussit := Character_Sit
+	return
+}
+loadTarget_party_slot_1:
+{
+	Gui,Submit, nohide
+	Hotkey, %Target_party_slot_1%, Routine, On ;Assign hotkey to the inputed key
+	if previousTarget_party_slot_1 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousTarget_party_slot_1%, Routine, Off
+	}
+	previousTarget_party_slot_1 := Target_party_slot_1
+	return
+}
+loadTarget_party_slot_2:
+{
+	Gui,Submit, nohide
+	Hotkey, %Target_party_slot_2%, Routine, On ;Assign hotkey to the inputed key
+	if previousTarget_party_slot_2 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousTarget_party_slot_2%, Routine, Off
+	}
+	previousTarget_party_slot_2 := Target_party_slot_2
+	return
+}
+loadTarget_party_slot_3:
+{
+	Gui,Submit, nohide
+	Hotkey, %Target_party_slot_3%, Routine, On ;Assign hotkey to the inputed key
+	if previousTarget_party_slot_3 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousTarget_party_slot_3%, Routine, Off
+	}
+	previousTarget_party_slot_3 := Target_party_slot_3
+	return
+}
+loadTarget_party_slot_4:
+{
+	Gui,Submit, nohide
+	Hotkey, %Target_party_slot_4%, Routine, On ;Assign hotkey to the inputed key
+	if previousTarget_party_slot_4 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousTarget_party_slot_4%, Routine, Off
+	}
+	previousTarget_party_slot_4 := Target_party_slot_4
+	return
+}
+loadTarget_party_slot_5:
+{
+	Gui,Submit, nohide
+	Hotkey, %Target_party_slot_5%, Routine, On ;Assign hotkey to the inputed key
+	if previousTarget_party_slot_5 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousTarget_party_slot_5%, Routine, Off
+	}
+	previousTarget_party_slot_5 := Target_party_slot_5
+	return
+}
+loadTarget_party_slot_6:
+{
+	Gui,Submit, nohide
+	Hotkey, %Target_party_slot_6%, Routine, On ;Assign hotkey to the inputed key
+	if previousTarget_party_slot_6 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousTarget_party_slot_6%, Routine, Off
+	}
+	previousTarget_party_slot_6 := Target_party_slot_6
+	return
+}
+loadTarget_party_slot_self:
+{
+	Gui,Submit, nohide
+	Hotkey, %Target_party_slot_self%, Routine, On ;Assign hotkey to the inputed key
+	if previousTarget_party_slot_self ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousTarget_party_slot_self%, Routine, Off
+	}
+	previousTarget_party_slot_self := Target_party_slot_self
+	return
+}
+loadHotbar_row_1_slot_1:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_1%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_1 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_1%, Routine, Off
+	}
+	previousHotbar_row_1_slot_1 := Hotbar_row_1_slot_1
+	return
+}
+loadHotbar_row_1_slot_2:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_2%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_2 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_2%, Routine, Off
+	}
+	previousHotbar_row_1_slot_2 := Hotbar_row_1_slot_2
+	return
+}
+loadHotbar_row_1_slot_3:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_3%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_3 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_3%, Routine, Off
+	}
+	previousHotbar_row_1_slot_3 := Hotbar_row_1_slot_3
+	return
+}
+loadHotbar_row_1_slot_4:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_4%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_4 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_4%, Routine, Off
+	}
+	previousHotbar_row_1_slot_4 := Hotbar_row_1_slot_4
+	return
+}
+loadHotbar_row_1_slot_5:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_5%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_5 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_5%, Routine, Off
+	}
+	previousHotbar_row_1_slot_5 := Hotbar_row_1_slot_5
+	return
+}
+loadHotbar_row_1_slot_6:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_6%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_6 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_6%, Routine, Off
+	}
+	previousHotbar_row_1_slot_6 := Hotbar_row_1_slot_6
+	return
+}
+loadHotbar_row_1_slot_7:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_7%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_7 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_7%, Routine, Off
+	}
+	previousHotbar_row_1_slot_7 := Hotbar_row_1_slot_7
+	return
+}
+loadHotbar_row_1_slot_8:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_8%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_8 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_8%, Routine, Off
+	}
+	previousHotbar_row_1_slot_8 := Hotbar_row_1_slot_8
+	return
+}
+loadHotbar_row_1_slot_9:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_9%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_9 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_9%, Routine, Off
+	}
+	previousHotbar_row_1_slot_9 := Hotbar_row_1_slot_9
+	return
+}
+loadHotbar_row_1_slot_10:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_10%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_10 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_10%, Routine, Off
+	}
+	previousHotbar_row_1_slot_10 := Hotbar_row_1_slot_10
+	return
+}
+loadHotbar_row_1_slot_11:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_11%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_11 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_11%, Routine, Off
+	}
+	previousHotbar_row_1_slot_11 := Hotbar_row_1_slot_11
+	return
+}
+loadHotbar_row_1_slot_12:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_1_slot_12%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_1_slot_12 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_12%, Routine, Off
+	}
+	previousHotbar_row_1_slot_12 := Hotbar_row_1_slot_12
+	return
+}
+loadHotbar_row_2_slot_1:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_1%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_1 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_2_slot_1%, Routine, Off
+	}
+	previousHotbar_row_2_slot_1 := Hotbar_row_2_slot_1
+	return
+}
+loadHotbar_row_2_slot_2:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_2%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_2 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_2%, Routine, Off
+	}
+	previousHotbar_row_2_slot_2 := Hotbar_row_2_slot_2
+	return
+}
+loadHotbar_row_2_slot_3:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_3%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_3 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_2_slot_3%, Routine, Off
+	}
+	previousHotbar_row_2_slot_3 := Hotbar_row_2_slot_3
+	return
+}
+loadHotbar_row_2_slot_4:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_4%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_4 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_2_slot_4%, Routine, Off
+	}
+	previousHotbar_row_2_slot_4 := Hotbar_row_2_slot_4
+	return
+}
+loadHotbar_row_2_slot_5:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_5%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_5 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_2_slot_5%, Routine, Off
+	}
+	previousHotbar_row_2_slot_5 := Hotbar_row_2_slot_5
+	return
+}
+loadHotbar_row_2_slot_6:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_6%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_6 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_2_slot_6%, Routine, Off
+	}
+	previousHotbar_row_2_slot_6 := Hotbar_row_2_slot_6
+	return
+}
+loadHotbar_row_2_slot_7:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_7%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_7 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_2_slot_7%, Routine, Off
+	}
+	previousHotbar_row_2_slot_7 := Hotbar_row_2_slot_7
+	return
+}
+loadHotbar_row_2_slot_8:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_8%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_8 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_2_slot_8%, Routine, Off
+	}
+	previousHotbar_row_2_slot_8 := Hotbar_row_2_slot_8
+	return
+}
+loadHotbar_row_2_slot_9:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_9%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_9 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_2_slot_9%, Routine, Off
+	}
+	previousHotbar_row_2_slot_9 := Hotbar_row_2_slot_9
+	return
+}
+loadHotbar_row_2_slot_10:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_10%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_10 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_2_slot_10%, Routine, Off
+	}
+	previousHotbar_row_2_slot_10 := Hotbar_row_2_slot_10
+	return
+}
+loadHotbar_row_2_slot_11:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_11%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_11 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_11%, Routine, Off
+	}
+	previousHotbar_row_2_slot_11 := Hotbar_row_2_slot_11
+	return
+}
+loadHotbar_row_2_slot_12:
+{
+	Gui,Submit, nohide
+	Hotkey, %Hotbar_row_2_slot_12%, Routine, On ;Assign hotkey to the inputed key
+	if previousHotbar_row_2_slot_12 ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousHotbar_row_1_slot_11%, Routine, Off
+	}
+	previousHotbar_row_2_slot_12 := Hotbar_row_2_slot_12
+	return
+}
+
+
+
+
+
+
+
+forwardsave:
+{
+	IniWrite, %Move_Forward%, %IniFile%, Movement, Forward
+	return
+}
+Backwardsave:
+{
+	IniWrite, %Move_Backward%, %IniFile%, Movement, Backward
+	return
+}
+leftsave:
+{
+	IniWrite, %Move_Left%, %IniFile%, Movement, Left
+	return
+}
+rightsave:
+{
+	IniWrite, %Move_Right%, %IniFile%, Movement, Right
+	return
+}
+sitsave:
+{
+	IniWrite, %Character_sit%, %IniFile%, Target Party Slot, Sit
+	return	
+}
+Target_party_slot_1save:
+{
+	IniWrite, %Target_party_slot_1%, %IniFile%, Target Party Slot, Party Slot 1
+	return	
+}
+Target_party_slot_2save:
+{
+	IniWrite, %Target_party_slot_2%, %IniFile%, Target Party Slot, Party Slot 2
+	return	
+}	
+Target_party_slot_3save:
+{
+	IniWrite, %Target_party_slot_3%, %IniFile%, Target Party Slot, Party Slot 3
+	return	
+}
+Target_party_slot_4save:
+{
+	IniWrite, %Target_party_slot_4%, %IniFile%, Target Party Slot, Party Slot 4
+	return	
+}
+Target_party_slot_5save:
+{
+	IniWrite, %Target_party_slot_5%, %IniFile%, Target Party Slot, Party Slot 5
+	return	
+}
+Target_party_slot_6save:
+{
+	IniWrite, %Target_party_slot_6%, %IniFile%, Target Party Slot, Party Slot 6
+	return	
+}
+Target_party_slot_selfsave:
+{
+	IniWrite, %Target_party_slot_self%, %IniFile%, Target Party Slot, Party Slot self
+	return	
+}
+Hotbar_row_1_slot_1save:
+{
+	IniWrite, %Hotbar_row_1_slot_1%, %IniFile%, HotBar Row 1, slot 1
+	return	
+}
+Hotbar_row_1_slot_2save:
+{
+	IniWrite, %Hotbar_row_1_slot_2%, %IniFile%, HotBar Row 1, slot 2
+	return	
+}
+Hotbar_row_1_slot_3save:
+{
+	IniWrite, %Hotbar_row_1_slot_3%, %IniFile%, HotBar Row 1, slot 3
+	return	
+}
+Hotbar_row_1_slot_4save:
+{
+	IniWrite, %Hotbar_row_1_slot_4%, %IniFile%, HotBar Row 1, slot 4
+	return	
+}
+Hotbar_row_1_slot_5save:
+{
+	IniWrite, %Hotbar_row_1_slot_5%, %IniFile%, HotBar Row 1, slot 5
+	return	
+}
+Hotbar_row_1_slot_6save:
+{
+	IniWrite, %Hotbar_row_1_slot_6%, %IniFile%, HotBar Row 1, slot 6
+	return	
+}
+Hotbar_row_1_slot_7save:
+{
+	IniWrite, %Hotbar_row_1_slot_7%, %IniFile%, HotBar Row 1, slot 7
+	return	
+}
+Hotbar_row_1_slot_8save:
+{
+	IniWrite, %Hotbar_row_1_slot_8%, %IniFile%, HotBar Row 1, slot 8
+	return	
+}
+Hotbar_row_1_slot_9save:
+{
+	IniWrite, %Hotbar_row_1_slot_9%, %IniFile%, HotBar Row 1, slot 9
+	return	
+}
+Hotbar_row_1_slot_10save:
+{
+	IniWrite, %Hotbar_row_1_slot_10%, %IniFile%, HotBar Row 1, slot 10
+	return	
+}
+Hotbar_row_1_slot_11save:
+{
+	IniWrite, %Hotbar_row_1_slot_11%, %IniFile%, HotBar Row 1, slot 11
+	return	
+}
+Hotbar_row_1_slot_12save:
+{
+	IniWrite, %Hotbar_row_1_slot_12%, %IniFile%, HotBar Row 1, slot 12
+	return	
+}
+Hotbar_row_2_slot_1save:
+{
+	IniWrite, %Hotbar_row_2_slot_1%, %IniFile%, HotBar Row 2, slot 1
+	return	
+}
+Hotbar_row_2_slot_2save:
+{
+	IniWrite, %Hotbar_row_2_slot_2%, %IniFile%, HotBar Row 2, slot 2
+	return	
+}
+Hotbar_row_2_slot_3save:
+{
+	IniWrite, %Hotbar_row_2_slot_3%, %IniFile%, HotBar Row 2, slot 3
+	return	
+}
+Hotbar_row_2_slot_4save:
+{
+	IniWrite, %Hotbar_row_2_slot_4%, %IniFile%, HotBar Row 2, slot 4
+	return	
+}
+Hotbar_row_2_slot_5save:
+{
+	IniWrite, %Hotbar_row_2_slot_5%, %IniFile%, HotBar Row 2, slot 5
+	return	
+}
+Hotbar_row_2_slot_6save:
+{
+	IniWrite, %Hotbar_row_2_slot_6%, %IniFile%, HotBar Row 2, slot 6
+	return	
+}
+Hotbar_row_2_slot_7save:
+{
+	IniWrite, %Hotbar_row_2_slot_7%, %IniFile%, HotBar Row 2, slot 7
+	return	
+}
+Hotbar_row_2_slot_8save:
+{
+	IniWrite, %Hotbar_row_2_slot_8%, %IniFile%, HotBar Row 2, slot 8
+	return	
+}
+Hotbar_row_2_slot_9save:
+{
+	IniWrite, %Hotbar_row_2_slot_9%, %IniFile%, HotBar Row 2, slot 9
+	return	
+}
+Hotbar_row_2_slot_10save:
+{
+	IniWrite, %Hotbar_row_2_slot_10%, %IniFile%, HotBar Row 2, slot 10
+	return	
+}
+Hotbar_row_2_slot_11save:
+{
+	IniWrite, %Hotbar_row_2_slot_11%, %IniFile%, HotBar Row 2, slot 11
+	return	
+}
+Hotbar_row_2_slot_12save:
+{
+	IniWrite, %Hotbar_row_2_slot_12%, %IniFile%, HotBar Row 1, slot 12
+	return	
+}
+
 return
