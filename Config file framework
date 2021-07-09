@@ -17,6 +17,7 @@ IfExist, %IniFile%
 		Iniread, Move_Left, Config.ini, Movement, Left
 		Iniread, Move_Right, Config.ini, Movement, Right
 		Iniread, Character_sit, Config.ini, Movement, Sit
+		Iniread, Character_Follow, Config.ini, Movement, Follow
 	}
 	
 	Target_Party:
@@ -68,6 +69,7 @@ IfExist, %IniFile%
 	gosub loadleft
 	gosub loadright
 	gosub loadsit
+	gosub loadFollow
 	gosub loadTarget_party_slot_1
 	gosub loadTarget_party_slot_2
 	gosub loadTarget_party_slot_3
@@ -128,6 +130,10 @@ IfExist, %IniFile%
 	Gui, Add, Text,, Sit
 	Gui, Add, Hotkey, vCharacter_Sit gloadsit, % Character_Sit
 	Gui, Add, Button, gsitsave, Save
+	
+	Gui, Add, Text,, Follow
+	Gui, Add, Hotkey, vCharacter_Follow gloadFollow, % Character_Follow
+	Gui, Add, Button, gFollowsave, Save
 	
 	Gui, Add, Text,, Target Party Slot Keybinds
 	
@@ -329,6 +335,17 @@ loadsit:
 		Hotkey, %previoussit%, Routine, Off
 	}
 	Previoussit := Character_Sit
+	return
+}
+loadfollow:
+{
+	Gui,Submit, nohide
+	Hotkey, %Character_Follow%, Routine, On ;Assign hotkey to the inputed key
+	if previousFollow ;Save previous for disabling it when a new key appears
+	{
+		Hotkey, %previousFollow%, Routine, Off
+	}
+	PreviousFollow := Character_Follow
 	return
 }
 loadTarget_party_slot_1:
@@ -701,7 +718,12 @@ rightsave:
 }
 sitsave:
 {
-	IniWrite, %Character_sit%, %IniFile%, Target Party Slot, Sit
+	IniWrite, %Character_sit%, %IniFile%, Movement, Sit
+	return	
+}
+Followsave:
+{
+	IniWrite, %Character_Follow%, %IniFile%, Movement, Follow
 	return	
 }
 Target_party_slot_1save:
